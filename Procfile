@@ -1,0 +1,1 @@
+web: gunicorn website_avax.wsgi --log-file -
