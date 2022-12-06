@@ -1,6 +1,7 @@
 from django.db import models
 
 from cars.models import *
+from users.models import Users
 
 
 def number_container():
@@ -66,7 +67,8 @@ class PurchasedEngines(models.Model):
         verbose_name = 'Купленный двигатель'
         verbose_name_plural = '1. Купленные двигателя'
 
-    container = models.ForeignKey(Container, verbose_name='Контейнер', on_delete=models.PROTECT) # установить по дефолту последний контейнер
+    container = models.ForeignKey(Container, verbose_name='Контейнер',
+                                  on_delete=models.PROTECT)  # установить по дефолту последний контейнер
     number = models.CharField(verbose_name='Разборочный', max_length=255, default=number_part)
     mark = models.ForeignKey(Mark, verbose_name='Марка авто', on_delete=models.PROTECT)
     model = models.ForeignKey(Model, verbose_name='Модель авто', on_delete=models.PROTECT)
@@ -80,9 +82,10 @@ class PurchasedEngines(models.Model):
     warehouse = models.BooleanField(verbose_name='Перемещен на склад',
                                     help_text='Да - если на складе погрузки в контейнер, Нет - если на складе у продавца',
                                     default=False)
-    # order = models.BooleanField()
-    # who_order = models.ForeignKey()
-    # оплата или предоплата
+    order = models.BooleanField(verbose_name='Резерв', default=False)
+    who_order = models.ForeignKey(Users, verbose_name='Заказчик', on_delete=models.CASCADE)
+    payment = models.CharField(verbose_name='Оплата/Предоплата', max_length=20, blank=True, null=True,
+                               help_text='Указать стоимость оплаты или предоплаты', default='0')
 
     def __str__(self):
         return f'{self.mark} {self.model} ({self.engine_number})'
