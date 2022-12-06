@@ -81,8 +81,12 @@ WSGI_APPLICATION = 'website_avax.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'degibdkagh22cu',
+        'USER': 'wslzbdxzeorlyc',
+        'PASSWORD': 'caf6accd33232e4f5cdb71ed7507acf37fce6cb3fff49455d0404663de1740b7',
+        'HOST': 'ec2-52-19-188-149.eu-west-1.compute.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
