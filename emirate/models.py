@@ -83,7 +83,7 @@ class PurchasedEngines(models.Model):
                                     help_text='Да - если на складе погрузки в контейнер, Нет - если на складе у продавца',
                                     default=False)
     order = models.BooleanField(verbose_name='Резерв', default=False)
-    who_order = models.ForeignKey(Users, verbose_name='Заказчик', on_delete=models.CASCADE)
+    who_order = models.ForeignKey(Users, verbose_name='Заказчик', on_delete=models.PROTECT)
     payment = models.CharField(verbose_name='Оплата/Предоплата', max_length=20, blank=True, null=True,
                                help_text='Указать стоимость оплаты или предоплаты', default='0')
 
