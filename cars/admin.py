@@ -9,7 +9,7 @@ class AdminMark(admin.ModelAdmin):
 
 @admin.register(Model)
 class AdminModel(admin.ModelAdmin):
-    list_display = ['name_mark', 'name_model']
+    list_display = ['mark', 'model']
 
 
 @admin.register(Engines)

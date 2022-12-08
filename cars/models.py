@@ -17,11 +17,11 @@ class Model(models.Model):
         verbose_name = 'Модель'
         verbose_name_plural = '2. Модели'
 
-    name_mark = models.ForeignKey(Mark, verbose_name='Марка авто', on_delete=models.PROTECT)
-    name_model = models.CharField(verbose_name='Название модели', max_length=255)
+    mark = models.ForeignKey(Mark, verbose_name='Марка авто', on_delete=models.PROTECT)
+    model = models.CharField(verbose_name='Название модели', max_length=255)
 
     def __str__(self):
-        return f'{self.name_model}'
+        return f'{self.model}'
 
 
 class FuelEngine(models.Model):
@@ -51,7 +51,7 @@ class Engines(models.Model):
         verbose_name = 'Двигатель'
         verbose_name_plural = '4. Двигателя'
 
-    mark_auto = models.ForeignKey(Mark, verbose_name='Марка авто', on_delete=models.PROTECT)
+    mark = models.ForeignKey(Mark, verbose_name='Марка авто', on_delete=models.PROTECT)
     name = models.CharField(verbose_name='Маркировка двигателя', max_length=100)
     fuel = models.ForeignKey(FuelEngine, verbose_name='Топливо', on_delete=models.PROTECT)
     volume_engine = models.CharField(verbose_name='Обьем двигателя', max_length=50)

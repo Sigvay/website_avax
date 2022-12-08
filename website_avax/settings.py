@@ -22,9 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-40_td615$gpyhsh(0!#3$ahrbrma5-r%gdy)v+wf%5te--f0yb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+
 
 # Application definition
 
@@ -35,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    ''
+    'smart_selects',
     'cars',
     'emirate',
     'minsk',
@@ -148,3 +149,4 @@ URL_AVAX = 'http://bas.avax.by/platforms/one/export_modt.xlsx'
 EXCEL_DIR = os.path.join(BASE_DIR, 'minsk/file/excel')
 EXCEL_BASE_IMPORT = os.path.join(EXCEL_DIR, 'import.xlsx')
 EXCEL_BASE_EXPORT = os.path.join(EXCEL_DIR, 'export.xlsx')
+
