@@ -72,28 +72,9 @@ class PurchasedEngines(models.Model):
                                   on_delete=models.PROTECT)  # установить по дефолту последний контейнер
     number = models.CharField(verbose_name='Разборочный', max_length=255, default=number_part)
     mark = models.ForeignKey(Mark, verbose_name='Марка авто', on_delete=models.PROTECT)
-    # model = models.ForeignKey(Model, verbose_name='Модель авто', on_delete=models.PROTECT)
-    model = ChainedForeignKey(
-        Model,
-        chained_field='mark',
-        chained_model_field='mark',
-        show_all=False,
-        auto_choose=True,
-        sort=True,
-        verbose_name='Модель авто'
-    )
+    model = models.ForeignKey(Model, verbose_name='Модель авто', on_delete=models.PROTECT)
     year = models.CharField(verbose_name='Год выпуска', max_length=10, blank=True, null=True)
-    fuel = models.ForeignKey(FuelEngine, verbose_name='Топливо', on_delete=models.PROTECT)
-    # engine_mark = models.ForeignKey(Engines, verbose_name='Маркировка двигателя', on_delete=models.PROTECT)
-    engine_mark = ChainedForeignKey(
-        Engines,
-        chained_field='mark',
-        chained_model_field='mark',
-        show_all=False,
-        auto_choose=True,
-        sort=True,
-        verbose_name='Маркировка двигателя'
-    )
+    engine_mark = models.ForeignKey(Engines, verbose_name='Маркировка двигателя', on_delete=models.PROTECT)
     engine_number = models.CharField(verbose_name='Номер блока', max_length=255, blank=True, null=True)
     transmission = models.ForeignKey(Transmissions, verbose_name='Тип КПП', on_delete=models.PROTECT)
     weigh = models.CharField(verbose_name='Вес мотора', max_length=100, blank=True, null=True)
@@ -118,7 +99,6 @@ class EnginesInStock(models.Model):
     mark = models.ForeignKey(Mark, verbose_name='Марка авто', on_delete=models.PROTECT)
     model = models.ForeignKey(Model, verbose_name='Модель авто', on_delete=models.PROTECT)
     year = models.CharField(verbose_name='Год выпуска', max_length=10, blank=True, null=True)
-    fuel = models.ForeignKey(FuelEngine, verbose_name='Топливо', on_delete=models.PROTECT)
     engine_mark = models.ForeignKey(Engines, verbose_name='Маркировка двигателя', on_delete=models.PROTECT)
     transmission = models.ForeignKey(Transmissions, verbose_name='Тип КПП', on_delete=models.PROTECT)
     price = models.IntegerField(verbose_name='Стоимость запчасти', blank=True, null=True)

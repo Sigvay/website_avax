@@ -22,5 +22,5 @@ class AdminPurchase(admin.ModelAdmin):
 
 @admin.register(EnginesInStock)
 class AdminEnginesInStock(admin.ModelAdmin):
-    list_display = ['mark', 'model', 'year','fuel', 'engine_mark',
+    list_display = ['mark', 'model', 'year', 'engine_mark',
                     'transmission', 'price']
