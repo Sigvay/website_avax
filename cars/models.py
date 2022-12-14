@@ -6,10 +6,10 @@ class Mark(models.Model):
         verbose_name = 'Марка'
         verbose_name_plural = '1. Марки'
 
-    name_mark = models.CharField(verbose_name='Название марки', max_length=255)
+    name = models.CharField(verbose_name='Название марки', max_length=255)
 
     def __str__(self):
-        return f'{self.name_mark}'
+        return f'{self.name}'
 
 
 class Model(models.Model):
