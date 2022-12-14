@@ -17,10 +17,10 @@ class AdminContainer(admin.ModelAdmin):
 @admin.register(PurchasedEngines)
 class AdminPurchase(admin.ModelAdmin):
     list_display = ['container', 'number', 'mark', 'model',
-                   'year', 'engine_mark', 'engine_number', 'price', 'warehouse']
+                   'year', 'engine_mark', 'engine_number', 'transmission', 'description', 'price', 'warehouse']
 
 
 @admin.register(EnginesInStock)
 class AdminEnginesInStock(admin.ModelAdmin):
     list_display = ['mark', 'model', 'year', 'engine_mark',
-                    'transmission', 'price']
+                    'transmission', 'description', 'price']
