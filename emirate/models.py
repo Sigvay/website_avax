@@ -77,6 +77,8 @@ class PurchasedEngines(models.Model):
     engine_mark = models.ForeignKey(Engines, verbose_name='Маркировка двигателя', on_delete=models.PROTECT)
     engine_number = models.CharField(verbose_name='Номер блока', max_length=255, blank=True, null=True)
     transmission = models.ForeignKey(Transmissions, verbose_name='Тип КПП', on_delete=models.PROTECT)
+    description = models.ForeignKey(DescriptionEngnine, verbose_name='Описание', on_delete=models.PROTECT,
+                                    blank=True, null=True)
     weigh = models.CharField(verbose_name='Вес мотора', max_length=100, blank=True, null=True)
     price = models.IntegerField(verbose_name='Стоимость запчасти', blank=True, null=True)
     warehouse = models.BooleanField(verbose_name='Перемещен на склад',
@@ -101,6 +103,8 @@ class EnginesInStock(models.Model):
     year = models.CharField(verbose_name='Год выпуска', max_length=10, blank=True, null=True)
     engine_mark = models.ForeignKey(Engines, verbose_name='Маркировка двигателя', on_delete=models.PROTECT)
     transmission = models.ForeignKey(Transmissions, verbose_name='Тип КПП', on_delete=models.PROTECT)
+    description = models.ForeignKey(DescriptionEngnine, verbose_name='Описание', on_delete=models.PROTECT,
+                                    blank=True, null=True)
     price = models.IntegerField(verbose_name='Стоимость запчасти', blank=True, null=True)
 
     def __str__(self):

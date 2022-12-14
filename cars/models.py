@@ -6,10 +6,10 @@ class Mark(models.Model):
         verbose_name = 'Марка'
         verbose_name_plural = '1. Марки'
 
-    name = models.CharField(verbose_name='Название марки', max_length=255)
+    name_mark = models.CharField(verbose_name='Название марки', max_length=255)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.name_mark}'
 
 
 class Model(models.Model):
@@ -59,3 +59,14 @@ class Engines(models.Model):
 
     def __str__(self):
         return f'{self.name} ({self.volume_engine}{self.type_engine})'
+
+
+class DescriptionEngnine(models.Model):
+    class Meta:
+        verbose_name = 'Примечание к ДВС'
+        verbose_name_plural = '6. Примечания к ДВС'
+
+    description = models.CharField(verbose_name='Примечание', max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.description}'

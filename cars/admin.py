@@ -4,7 +4,7 @@ from .models import *
 
 @admin.register(Mark)
 class AdminMark(admin.ModelAdmin):
-    list_display = ['name']
+    list_display = ['name_mark']
 
 
 @admin.register(Model)

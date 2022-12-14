@@ -14,5 +14,6 @@ class OrderEmirate(models.Model):
     count = models.CharField(verbose_name='Количество', max_length=50, default='1')
     payment = models.CharField(verbose_name='Оплата/Предоплата', max_length=20, blank=True, null=True,
                                help_text='Указать стоимость оплаты или предоплаты', default='0')
+    date_add = models.DateField(verbose_name='Дата заказа', blank=True, null=True)
     completed = models.BooleanField(verbose_name='Выполнен', default=False,
                                     help_text='Да - если закуплен, Нет - если на стадии выполнения')
