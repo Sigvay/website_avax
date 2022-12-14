@@ -25,3 +25,8 @@ class AdminFuelEngine(admin.ModelAdmin):
 @admin.register(Transmissions)
 class AdminTransmissions(admin.ModelAdmin):
     list_display = ['name']
+
+
+@admin.register(DescriptionEngnine)
+class AdminDescriptionEngnine(admin.ModelAdmin):
+    list_display = ['description']
