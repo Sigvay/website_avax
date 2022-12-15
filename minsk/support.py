@@ -1,5 +1,6 @@
 import datetime
 import os.path
+import math
 
 import pandas
 import random
@@ -10,6 +11,25 @@ from minsk.models import WarehouseMinsk, ExportPrice
 from website_avax import settings
 
 UTC = datetime.timezone(datetime.timedelta(hours=3))
+
+drom_description = """
+VIN - {}
+Цена за ДВС с КПП в сборе, навесное с ДВС и КПП по отдельности не продаем. Видео работы ДВС перед снятием.
+
+Уточняйте наличие товара на складе
+"""
+
+drom_name = "{} {} {}{}"
+
+drom_body = "{}{}"
+drom_year = "{}г."
+
+avito_name = '{} {} {}{} {}г.'
+avito_decription = """
+Артикул товара - {}
+
+{}
+"""
 
 
 def download_ex():
@@ -47,16 +67,20 @@ def count_down_price(name: str):
 
 
 def update_minsksklad():
-    export = read_ex()
-    import_art = [item[0] for item in export]
+    down_import = read_ex()
+    import_art = [item[0] for item in down_import]
     minsk_art = _convert(WarehouseMinsk.objects.all().values_list('article'))
-    try:
-        for art in minsk_art:
-            if art not in import_art:
-                position = WarehouseMinsk.objects.get(article=art)
-                position.delete()
-        for art in export:
-            if art[0] not in minsk_art:
+
+    # try:
+    for art in minsk_art:
+        if art not in import_art:
+            position = WarehouseMinsk.objects.get(article=art)
+            position.delete()
+    for art in down_import:
+        if art[0] not in minsk_art:
+            if math.isnan(art[12]):
+                pass
+            else:
                 record = WarehouseMinsk(article=art[0], mark_auto=art[1], model_auto=art[2], submodel_auto=art[3],
                                         year=art[4], spare=art[5], fuel=art[6], volume=art[7], type_engine=art[8],
                                         transmission=art[9],
@@ -67,38 +91,24 @@ def update_minsksklad():
                                         id_video=generate(8),
                                         video=art[17])
                 record.save()
-            elif get_position_minsk(art[0]).photo != art[14]:
-                update = WarehouseMinsk.objects.get(article=art[0])
-                update.photo = art[14]
-                update.save()
-            elif get_position_minsk(art[0]).video != art[17]:
-                update = WarehouseMinsk.objects.get(article=art[0])
-                update.video = art[17]
-                update.save()
-            elif get_position_minsk(art[0]).price != art[12]+50:
-                update = WarehouseMinsk.objects.get(article=art[0])
-                update.price = art[12]+50
-                update.save()
-    except Exception as error:
-        print(f'При обновлении возникла ошибка - {error}')
+        else:
+            if math.isnan(art[12]):
+                pos = WarehouseMinsk.objects.filter(article=art[0])
+                pos.update(
+                    mark_auto=art[1], model_auto=art[2], submodel_auto=art[3],
+                    year=art[4], spare=art[5], fuel=art[6], volume=art[7], type_engine=art[8],
+                    transmission=art[9], original_number=art[10], description=art[11], price=0,
+                    currency=art[13], photo=art[14], input_article='s' + str(art[15]), vin=art[16], video=art[17]
+                )
 
+            else:
+                pos = WarehouseMinsk.objects.filter(article=art[0])
+                pos.update(
+                    mark_auto=art[1], model_auto=art[2], submodel_auto=art[3],
+                    year=art[4], spare=art[5], fuel=art[6], volume=art[7], type_engine=art[8],
+                    transmission=art[9], original_number=art[10], description=art[11], price=art[12] + 50,
+                    currency=art[13], photo=art[14], input_article='s' + str(art[15]), vin=art[16], video=art[17]
+                )
 
-drom_description = """
-VIN - {}
-Цена за ДВС с КПП в сборе, навесное с ДВС и КПП по отдельности не продаем. Видео работы ДВС перед снятием.
-
-Уточняйте наличие товара на складе
-"""
-
-drom_name = "{} {} {}{}"
-
-drom_body = "{}{}"
-drom_year = "{}г."
-
-
-avito_name = '{} {} {}{} {}г.'
-avito_decription = """
-Артикул товара - {}
-
-{}
-"""
+    # except Exception as error:
+    #     print(f'При обновлении возникла ошибка - {error}')
