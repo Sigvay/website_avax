@@ -29,6 +29,11 @@ def number_part():
     return 'H' + str(default)
 
 
+def last_container():
+    con = Container.objects.last()
+    return con
+
+
 class Sellers(models.Model):
     class Meta:
         verbose_name = 'Продавец'
@@ -69,7 +74,8 @@ class PurchasedEngines(models.Model):
         verbose_name_plural = '1. Купленные двигателя'
 
     container = models.ForeignKey(Container, verbose_name='Контейнер',
-                                  on_delete=models.PROTECT)  # установить по дефолту последний контейнер
+                                  on_delete=models.PROTECT,
+                                  default=last_container)  # установить по дефолту последний контейнер
     number = models.CharField(verbose_name='Разборочный', max_length=255, default=number_part)
     mark = models.ForeignKey(Mark, verbose_name='Марка авто', on_delete=models.PROTECT)
     model = models.ForeignKey(Model, verbose_name='Модель авто', on_delete=models.PROTECT)
