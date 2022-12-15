@@ -71,44 +71,44 @@ def update_minsksklad():
     import_art = [item[0] for item in down_import]
     minsk_art = _convert(WarehouseMinsk.objects.all().values_list('article'))
 
-    # try:
-    for art in minsk_art:
-        if art not in import_art:
-            position = WarehouseMinsk.objects.get(article=art)
-            position.delete()
-    for art in down_import:
-        if art[0] not in minsk_art:
-            if math.isnan(art[12]):
-                pass
+    try:
+        for art in minsk_art:
+            if art not in import_art:
+                position = WarehouseMinsk.objects.get(article=art)
+                position.delete()
+        for art in down_import:
+            if art[0] not in minsk_art:
+                if math.isnan(art[12]):
+                    pass
+                else:
+                    record = WarehouseMinsk(article=art[0], mark_auto=art[1], model_auto=art[2], submodel_auto=art[3],
+                                            year=art[4], spare=art[5], fuel=art[6], volume=art[7], type_engine=art[8],
+                                            transmission=art[9],
+                                            original_number=art[10], description=art[11], price=art[12] + 50,
+                                            currency=art[13],
+                                            id_photo=generate(6),
+                                            photo=art[14], input_article='s' + str(art[15]), vin=art[16],
+                                            id_video=generate(8),
+                                            video=art[17])
+                    record.save()
             else:
-                record = WarehouseMinsk(article=art[0], mark_auto=art[1], model_auto=art[2], submodel_auto=art[3],
-                                        year=art[4], spare=art[5], fuel=art[6], volume=art[7], type_engine=art[8],
-                                        transmission=art[9],
-                                        original_number=art[10], description=art[11], price=art[12] + 50,
-                                        currency=art[13],
-                                        id_photo=generate(6),
-                                        photo=art[14], input_article='s' + str(art[15]), vin=art[16],
-                                        id_video=generate(8),
-                                        video=art[17])
-                record.save()
-        else:
-            if math.isnan(art[12]):
-                pos = WarehouseMinsk.objects.filter(article=art[0])
-                pos.update(
-                    mark_auto=art[1], model_auto=art[2], submodel_auto=art[3],
-                    year=art[4], spare=art[5], fuel=art[6], volume=art[7], type_engine=art[8],
-                    transmission=art[9], original_number=art[10], description=art[11], price=0,
-                    currency=art[13], photo=art[14], input_article='s' + str(art[15]), vin=art[16], video=art[17]
-                )
+                if math.isnan(art[12]):
+                    pos = WarehouseMinsk.objects.filter(article=art[0])
+                    pos.update(
+                        mark_auto=art[1], model_auto=art[2], submodel_auto=art[3],
+                        year=art[4], spare=art[5], fuel=art[6], volume=art[7], type_engine=art[8],
+                        transmission=art[9], original_number=art[10], description=art[11], price=0,
+                        currency=art[13], photo=art[14], input_article='s' + str(art[15]), vin=art[16], video=art[17]
+                    )
 
-            else:
-                pos = WarehouseMinsk.objects.filter(article=art[0])
-                pos.update(
-                    mark_auto=art[1], model_auto=art[2], submodel_auto=art[3],
-                    year=art[4], spare=art[5], fuel=art[6], volume=art[7], type_engine=art[8],
-                    transmission=art[9], original_number=art[10], description=art[11], price=art[12] + 50,
-                    currency=art[13], photo=art[14], input_article='s' + str(art[15]), vin=art[16], video=art[17]
-                )
+                else:
+                    pos = WarehouseMinsk.objects.filter(article=art[0])
+                    pos.update(
+                        mark_auto=art[1], model_auto=art[2], submodel_auto=art[3],
+                        year=art[4], spare=art[5], fuel=art[6], volume=art[7], type_engine=art[8],
+                        transmission=art[9], original_number=art[10], description=art[11], price=art[12] + 50,
+                        currency=art[13], photo=art[14], input_article='s' + str(art[15]), vin=art[16], video=art[17]
+                    )
 
-    # except Exception as error:
-    #     print(f'При обновлении возникла ошибка - {error}')
+    except Exception as error:
+        print(f'При обновлении возникла ошибка - {error}')
