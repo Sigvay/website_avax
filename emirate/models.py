@@ -86,7 +86,7 @@ class PurchasedEngines(models.Model):
     description = models.ForeignKey(DescriptionEngnine, verbose_name='Описание', on_delete=models.PROTECT,
                                     blank=True, null=True)
     weigh = models.CharField(verbose_name='Вес мотора', max_length=100, blank=True, null=True)
-    price = models.IntegerField(verbose_name='Стоимость запчасти', blank=True, null=True)
+    price = models.IntegerField(verbose_name='Стоимость закупки', blank=True, null=True)
     warehouse = models.BooleanField(verbose_name='Перемещен на склад',
                                     help_text='Да - если на складе погрузки в контейнер, Нет - если на складе у продавца',
                                     default=False)
