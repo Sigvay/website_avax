@@ -23,7 +23,7 @@ class NouskatAdmin(admin.ModelAdmin):
 
 @admin.register(ShipmentMinsk)
 class ShipmentMinskAdmin(admin.ModelAdmin):
-    list_display = ('tk', 'client', 'track', 'shipped')
+    list_display = ('tk', 'client', 'track', 'article', 'shipped')
     list_display_links = ('client',)
     list_filter = ('client',)
     search_fields = ('client',)
