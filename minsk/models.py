@@ -73,7 +73,7 @@ class ShipmentMinsk(models.Model):
     article = models.CharField(verbose_name='Разборочный', max_length=100, null=True, blank=True)
     tk = models.CharField(verbose_name='Транспортная', max_length=50)
     client = models.ForeignKey(Users, verbose_name='Клиент', null=True, blank=True, on_delete=models.PROTECT)
-    city = models.CharField(verbose_name='Город', max_length=100)
+    city = models.CharField(verbose_name='Город', max_length=100, null=True, blank=True)
     type_send = models.CharField(verbose_name='Тип отправки', max_length=100)
     information = models.CharField(verbose_name='Информация', max_length=255, null=True, blank=True)
     username = models.CharField(verbose_name='Кто записал', max_length=20)
