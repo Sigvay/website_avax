@@ -25,7 +25,7 @@ class WarehouseMinsk(models.Model):
     currency = models.CharField(verbose_name='Валюта', max_length=50)
     id_photo = models.CharField(verbose_name='id фото', max_length=10, blank=True)
     photo = models.TextField(verbose_name='Фото', blank=True, null=True)
-    input_article = models.CharField(verbose_name='Разборочный', max_length=50)
+    input_article = models.IntegerField(verbose_name='Разборочный')
     vin = models.CharField(verbose_name='VIN', max_length=20, blank=True, null=True)
     id_video = models.CharField(verbose_name='id видео', max_length=10, blank=True)
     video = models.CharField(verbose_name='Видео', max_length=255, blank=True, null=True)
