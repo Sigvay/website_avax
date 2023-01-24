@@ -87,7 +87,7 @@ def update_minsksklad():
                                             original_number=art[10], description=art[11], price=art[12] + 50,
                                             currency=art[13],
                                             id_photo=generate(6),
-                                            photo=art[14], input_article='s' + str(art[15]), vin=art[16],
+                                            photo=art[14], input_article=str(art[15]), vin=art[16],
                                             id_video=generate(8),
                                             video=art[17])
                     record.save()
