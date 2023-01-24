@@ -98,7 +98,7 @@ def update_minsksklad():
                         mark_auto=art[1], model_auto=art[2], submodel_auto=art[3],
                         year=art[4], spare=art[5], fuel=art[6], volume=art[7], type_engine=art[8],
                         transmission=art[9], original_number=art[10], description=art[11], price=0,
-                        currency=art[13], photo=art[14], input_article='s' + str(art[15]), vin=art[16], video=art[17]
+                        currency=art[13], photo=art[14], input_article=str(art[15]), vin=art[16], video=art[17]
                     )
 
                 else:
@@ -107,7 +107,7 @@ def update_minsksklad():
                         mark_auto=art[1], model_auto=art[2], submodel_auto=art[3],
                         year=art[4], spare=art[5], fuel=art[6], volume=art[7], type_engine=art[8],
                         transmission=art[9], original_number=art[10], description=art[11], price=art[12] + 50,
-                        currency=art[13], photo=art[14], input_article='s' + str(art[15]), vin=art[16], video=art[17]
+                        currency=art[13], photo=art[14], input_article=str(art[15]), vin=art[16], video=art[17]
                     )
 
     except Exception as error:
