@@ -40,7 +40,7 @@ def export_price(name: str):
             worksheet.write(f'G{i}', avito_name.format(result.spare, result.original_number, result.volume,
                                                        result.type_engine, result.year))
             worksheet.write(f'H{i}', avito_decription.format(result.input_article, result.description))
-            worksheet.write(f'I{i}', (result.price + 100) * 75)
+            worksheet.write(f'I{i}', (result.price + 100) * 80)
             worksheet.write(f'J{i}', result.photo)
             worksheet.write(f'K{i}', "Запчасти")
             worksheet.write(f'L{i}', "Товар приобретен на продажу")
@@ -90,7 +90,7 @@ def export_price(name: str):
             worksheet.write(f'I{i}', drom_year.format(result.year))
             worksheet.write(f'N{i}', drom_description.format(result.vin))
             worksheet.write(f'O{i}', 1)
-            worksheet.write(f'P{i}', (result.price + 100) * 75)
+            worksheet.write(f'P{i}', (result.price + 100) * 80)
             worksheet.write(f'Q{i}', 'В наличии')
             worksheet.write(f'S{i}', result.photo)
         workbook.close()
