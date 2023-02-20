@@ -81,34 +81,40 @@ def update_minsksklad():
                 if math.isnan(art[12]):
                     pass
                 else:
-                    record = WarehouseMinsk(article=art[0], mark_auto=art[1], model_auto=art[2], submodel_auto=art[3],
-                                            year=art[4], spare=art[5], fuel=art[6], volume=art[7], type_engine=art[8],
-                                            transmission=art[9],
-                                            original_number=art[10], description=art[11], price=art[12] + 50,
-                                            currency=art[13],
-                                            id_photo=generate(6),
-                                            photo=art[14], input_article=str(art[15]), vin=art[16],
-                                            id_video=generate(8),
-                                            video=art[17])
-                    record.save()
+                    if math.isnan(art[15]):
+                        pass
+                    else:
+                        record = WarehouseMinsk(article=art[0], mark_auto=art[1], model_auto=art[2], submodel_auto=art[3],
+                                                year=art[4], spare=art[5], fuel=art[6], volume=art[7], type_engine=art[8],
+                                                transmission=art[9],
+                                                original_number=art[10], description=art[11], price=art[12] + 50,
+                                                currency=art[13],
+                                                id_photo=generate(6),
+                                                photo=art[14], input_article=int(art[15]), vin=art[16],
+                                                id_video=generate(8),
+                                                video=art[17])
+                        record.save()
             else:
-                if math.isnan(art[12]):
-                    pos = WarehouseMinsk.objects.filter(article=art[0])
-                    pos.update(
-                        mark_auto=art[1], model_auto=art[2], submodel_auto=art[3],
-                        year=art[4], spare=art[5], fuel=art[6], volume=art[7], type_engine=art[8],
-                        transmission=art[9], original_number=art[10], description=art[11], price=0,
-                        currency=art[13], photo=art[14], input_article=str(art[15]), vin=art[16], video=art[17]
-                    )
-
+                if math.isnan(art[15]):
+                    pass
                 else:
-                    pos = WarehouseMinsk.objects.filter(article=art[0])
-                    pos.update(
-                        mark_auto=art[1], model_auto=art[2], submodel_auto=art[3],
-                        year=art[4], spare=art[5], fuel=art[6], volume=art[7], type_engine=art[8],
-                        transmission=art[9], original_number=art[10], description=art[11], price=art[12] + 50,
-                        currency=art[13], photo=art[14], input_article=str(art[15]), vin=art[16], video=art[17]
-                    )
+                    if math.isnan(art[12]):
+                        pos = WarehouseMinsk.objects.filter(article=art[0])
+                        pos.update(
+                            mark_auto=art[1], model_auto=art[2], submodel_auto=art[3],
+                            year=art[4], spare=art[5], fuel=art[6], volume=art[7], type_engine=art[8],
+                            transmission=art[9], original_number=art[10], description=art[11], price=0,
+                            currency=art[13], photo=art[14], input_article=int(art[15]), vin=art[16], video=art[17]
+                        )
+
+                    else:
+                        pos = WarehouseMinsk.objects.filter(article=art[0])
+                        pos.update(
+                            mark_auto=art[1], model_auto=art[2], submodel_auto=art[3],
+                            year=art[4], spare=art[5], fuel=art[6], volume=art[7], type_engine=art[8],
+                            transmission=art[9], original_number=art[10], description=art[11], price=art[12] + 50,
+                            currency=art[13], photo=art[14], input_article=int(art[15]), vin=art[16], video=art[17]
+                        )
 
     except Exception as error:
         print(f'При обновлении возникла ошибка - {error}')
