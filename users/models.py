@@ -14,7 +14,7 @@ class Users(AbstractUser):
                                              'транспортными компаниями')
     exctended_profile = models.BooleanField(verbose_name='Расширенный профиль', default=False,
                                             help_text='Установите флажок если пользователю нужно предоставить'
-                                                      ' доступ к закупкам в ОАЭ')
+                                                      ' доступ для постановки резерва')
     deny_access = models.BooleanField(verbose_name='Запретить доступ', default=False,
                                       help_text='Запрещает пользователю использовать приложение')
     id_telegram = models.CharField(verbose_name='id_telegram', max_length=50, blank=True)
