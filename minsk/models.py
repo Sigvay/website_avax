@@ -34,35 +34,6 @@ class WarehouseMinsk(models.Model):
         return f'{self.article}/{self.input_article} - {self.mark_auto} {self.model_auto} - {self.original_number}'
 
 
-class Nouskat(models.Model):
-    class Meta:
-        verbose_name = 'Ноускат'
-        verbose_name_plural = '3. Ноускаты'
-
-    mark = models.CharField(verbose_name='Марка', max_length=50)
-    model = models.CharField(verbose_name='Модель', max_length=50)
-    year = models.CharField(verbose_name='Год', max_length=10)
-    color = models.CharField(verbose_name='Цвет', max_length=20)
-    price = models.IntegerField(verbose_name='Цена')
-    note = models.CharField(verbose_name='Примечание', max_length=255)
-    active = models.BooleanField(verbose_name='Активный', default=True,
-                                 help_text='Если установлен флажок, обьявление видно в боте')
-    sold = models.BooleanField(verbose_name='Продано', default=False,
-                               help_text='Если установлен флажок, обьявление продано')
-    sale_price = models.IntegerField(verbose_name='Цена продажи', null=True, blank=True)
-
-    def __str__(self):
-        return f'{self.mark} {self.model}({self.year}) - {self.price}'
-
-
-class PhotoNouskat(models.Model):
-    nouskat_id = models.ForeignKey(Nouskat, verbose_name='Ноускат', on_delete=models.PROTECT)
-    image = models.ImageField(upload_to='public/image/')
-
-    def __str__(self):
-        return f'{self.image}'
-
-
 class ShipmentMinsk(models.Model):
     class Meta:
         verbose_name = 'Отправка Минск'
