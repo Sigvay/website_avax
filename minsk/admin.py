@@ -1,4 +1,6 @@
 from django.contrib import admin
+
+from users.models import UserCheckExport
 from .models import *
 
 
@@ -33,3 +35,8 @@ class CountExportAdmin(admin.ModelAdmin):
     list_display = ('name', 'show_url', 'count', 'date_last')
     exclude = ['url', 'count', 'date_last']
     prepopulated_fields = {"slug": ("name",), }
+
+
+@admin.register(UserCheckExport)
+class UserCheckExportAdmin(admin.ModelAdmin):
+    list_display = ('user_id', 'count', 'date_last')
