@@ -24,7 +24,3 @@ class CountExportAdmin(admin.ModelAdmin):
     exclude = ['url', 'count', 'date_last']
     prepopulated_fields = {"slug": ("name",), }
 
-
-@admin.register(UserCheckExport)
-class UserCheckExportAdmin(admin.ModelAdmin):
-    list_display = ('user_id', 'count', 'date_last')
