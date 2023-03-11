@@ -37,3 +37,16 @@ class UserRequest(models.Model):
 
     def __str__(self):
         return f'{self.date_query} - {self.user_id}-{self.query_name}'
+
+
+class UserCheckExport(models.Model):
+    class Meta:
+        verbose_name = 'Контроль загрузки Excel'
+        verbose_name_plural = '3. Контроль загрузок Excel'
+
+    user_id = models.ForeignKey(Users, verbose_name='пользователь', on_delete=models.PROTECT)
+    count = models.IntegerField(verbose_name='Кол-во скачиваний')
+    date_last = models.DateTimeField(verbose_name='Дата последнего скачивания', blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.user_id} - {self.count}"
