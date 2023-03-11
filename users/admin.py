@@ -14,8 +14,8 @@ class UsersAdmin(admin.ModelAdmin):
 class UserRequestAdmin(admin.ModelAdmin):
     list_display = ('date_query', 'user_id', 'query_name', 'available')
     list_display_links = None
-    list_filter = ('user_id',)
-    search_fields = ('query_name',)
+    list_filter = ('available',)
+    search_fields = ('user_id',)
 
 
 @admin.register(UserCheckExport)
