@@ -74,3 +74,31 @@ class ExportPrice(models.Model):
 
     def __str__(self):
         return f'{self.name}'
+
+
+class ExportPriceAvito(models.Model):
+    class Meta:
+        verbose_name = 'Прайс авито'
+        verbose_name_plural = '4. Прайсы авито'
+
+    name = models.CharField(verbose_name='Имя клиента', max_length=255)
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="slug")
+    url = models.CharField(verbose_name='Ссылка', max_length=255, blank=True, null=True,
+                           default='https://avaxdjango.herokuapp.com/minsk/export/avito/')
+    exchange = models.IntegerField(verbose_name="Курс валюты", default=1)
+    type_id = models.CharField(verbose_name='подкатегория товара', max_length=255, default="16-830")
+    category = models.CharField(verbose_name="Категория авито", max_length=255, default="Запчасти и аксессуары")
+    type_category = models.CharField(verbose_name="Тип запчастей", max_length=255, default="Товар приобретен на продажу")
+    condition = models.CharField(verbose_name="Состояние з/ч", max_length=255, default="Б/у")
+    manager_name = models.CharField(verbose_name='Имя менеджера', max_length=255, blank=True, null=True)
+    contact = models.CharField(verbose_name='Телефон', max_length=255, blank=True, null=True)
+    adress = models.CharField(verbose_name='Адресс', max_length=255, blank=True, null=True)
+    avalibale = models.CharField(verbose_name='Наличие', max_length=255, default="В наличии")
+    count = models.IntegerField(verbose_name='Колличество скачиваний', blank=True, null=True, default=0)
+    date_last = models.DateTimeField(verbose_name='Дата последнего скачивания', blank=True, null=True)
+
+    def show_url(self):
+        return f'{self.url}{self.slug}'
+
+    def __str__(self):
+        return f'{self.name}'

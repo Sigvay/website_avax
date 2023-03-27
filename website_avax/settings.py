@@ -147,6 +147,7 @@ LI = ['ID_EXT', 'МАРКА', 'МОДЕЛЬ', 'ПОДМОДЕЛЬ', 'ГОД', '�
 URL_AVAX = 'http://bas.avax.by/platforms/one/export_modt.xlsx'
 
 EXCEL_DIR = os.path.join(BASE_DIR, 'minsk/file/excel')
+XML_DIR = os.path.join(BASE_DIR, 'minsk/file/xml')
 EXCEL_BASE_IMPORT = os.path.join(EXCEL_DIR, 'import.xlsx')
 EXCEL_BASE_EXPORT = os.path.join(EXCEL_DIR, 'export.xlsx')
 

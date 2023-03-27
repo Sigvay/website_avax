@@ -59,11 +59,10 @@ def get_position_minsk(art):
     return result
 
 
-def count_down_price(name: str):
-    count = ExportPrice.objects.get(name=name)
-    count.date_last = datetime.datetime.now(UTC)
-    count.count += 1
-    count.save()
+def count_down_price(data):
+    data.date_last = datetime.datetime.now(UTC)
+    data.count += 1
+    data.save()
 
 
 def update_minsksklad():
@@ -84,8 +83,10 @@ def update_minsksklad():
                     if math.isnan(art[15]):
                         pass
                     else:
-                        record = WarehouseMinsk(article=art[0], mark_auto=art[1], model_auto=art[2], submodel_auto=art[3],
-                                                year=art[4], spare=art[5], fuel=art[6], volume=art[7], type_engine=art[8],
+                        record = WarehouseMinsk(article=art[0], mark_auto=art[1], model_auto=art[2],
+                                                submodel_auto=art[3],
+                                                year=art[4], spare=art[5], fuel=art[6], volume=art[7],
+                                                type_engine=art[8],
                                                 transmission=art[9],
                                                 original_number=art[10], description=art[11], price=art[12] + 50,
                                                 currency=art[13],

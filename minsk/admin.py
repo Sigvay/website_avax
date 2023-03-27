@@ -24,3 +24,10 @@ class CountExportAdmin(admin.ModelAdmin):
     exclude = ['url', 'count', 'date_last']
     prepopulated_fields = {"slug": ("name",), }
 
+
+@admin.register(ExportPriceAvito)
+class ExportPriceAvitoAdmin(admin.ModelAdmin):
+    list_display = ('name', 'show_url', 'count', 'date_last')
+    exclude = ['url', 'count', 'date_last']
+    prepopulated_fields = {"slug": ("name",), }
+    search_fields = ('name',)

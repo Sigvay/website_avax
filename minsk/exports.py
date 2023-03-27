@@ -1,59 +1,15 @@
 import xlsxwriter as xlsx
+import lxml.etree as ET
+from lxml import etree as etr
 from django.http import FileResponse
+
 
 from website_avax import settings
 from .support import *
 
 
 def export_price(name: str):
-    if name == 'Avito':
-        results = WarehouseMinsk.objects.all()
-        workbook = xlsx.Workbook(settings.EXCEL_BASE_EXPORT)
-        worksheet = workbook.add_worksheet()
-        bold = workbook.add_format({'bold': True})
-        worksheet.write('A1', 'Id', bold)  # обязательный
-        worksheet.write('B1', 'ManagerName', bold)  # не обязательный "имя менеджера"
-        worksheet.write('C1', 'ContactPhone', bold)  # не обязательный "конт. телефон"
-        worksheet.write('D1', 'Address', bold)  # обязательный "адресс"
-        worksheet.write('E1', 'ContactMethod', bold)  # не обязательный способ связи "По телефону и в сообщениях"
-        worksheet.write('F1', 'Category', bold)  # обязательный "Запчасти и аксессуары"
-        worksheet.write('G1', 'Title', bold)  # обязательный "Дверь правая передняя Skoda Rapid"
-        worksheet.write('H1', 'Description', bold)  # обязательный "Описание смотреть документацию"
-        worksheet.write('I1', 'Price', bold)  # не обязательный "цена в рублях"
-        worksheet.write('J1', 'ImageUrls', bold)  # не обязательный "url photo"
-        worksheet.write('K1', 'GoodsType', bold)  # обязательный "Запчасти"
-        worksheet.write('L1', 'AdType', bold)  # обязательный "Товар приобретен на продажу"
-        worksheet.write('M1', 'ProductType', bold)  # обязательный "Для автомобилей"
-        worksheet.write('N1', 'SparePartType', bold)  # обязательный "Двигатель"
-        worksheet.write('O1', 'EngineSparePartType', bold)  # обязательный "Двигатель в сборе"
-        worksheet.write('P1', 'Condition', bold)  # обязательный "Б/у"
-        worksheet.write('Q1', 'Originality', bold)  # не обязательный "Оригинал"
-        worksheet.write('R1', 'Availability', bold)  # не обязательный "В наличии"
-        worksheet.write('S1', 'OEM', bold)  # не обязательный "Маркировку наверное вписать лучше"
-        for i, (result) in enumerate(results, start=2):
-            worksheet.write(f'A{i}', result.article)
-            worksheet.write(f'B{i}', 'Александр')
-            worksheet.write(f'C{i}', '79165147176')
-            worksheet.write(f'D{i}', 'Москва, улица Промышленная, 11, стр.3')
-            worksheet.write(f'E{i}', 'По телефону и в сообщениях')
-            worksheet.write(f'F{i}', 'Запчасти и аксессуары')
-            worksheet.write(f'G{i}', avito_name.format(result.spare, result.original_number, result.volume,
-                                                       result.type_engine, result.year))
-            worksheet.write(f'H{i}', avito_decription.format(result.input_article, result.description))
-            worksheet.write(f'I{i}', (result.price + 100) * 80)
-            worksheet.write(f'J{i}', result.photo)
-            worksheet.write(f'K{i}', "Запчасти")
-            worksheet.write(f'L{i}', "Товар приобретен на продажу")
-            worksheet.write(f'M{i}', "Для автомобилей")
-            worksheet.write(f'N{i}', "Двигатель")
-            worksheet.write(f'O{i}', "Двигатель в сборе")
-            worksheet.write(f'P{i}', "Б/у")
-            worksheet.write(f'Q{i}', "Оригинал")
-            worksheet.write(f'R{i}', "В наличии")
-            worksheet.write(f'S{i}', result.original_number)
-        workbook.close()
-        return FileResponse(open(settings.EXCEL_BASE_EXPORT, 'rb'))
-    elif name == 'Drom':
+    if name == 'Drom':
         results = WarehouseMinsk.objects.all()
         workbook = xlsx.Workbook(settings.EXCEL_BASE_EXPORT)
         worksheet = workbook.add_worksheet()
@@ -134,3 +90,46 @@ def export_price(name: str):
             worksheet.write(f'O{i}', result.photo)
         workbook.close()
         return FileResponse(open(settings.EXCEL_BASE_EXPORT, 'rb'))
+
+
+def export_avito(data):
+    results = requests.get(f'https://avax.by/api/all_zap/DueMQ88!Sm43')
+    ads = ET.Element("Ads")
+    ads.set("formatVersion", "3")
+    ads.set("target", "Avito.ru")
+    for result in results.json():
+        ad = ET.SubElement(ads, "Ad")
+        ET.SubElement(ad, "Id").text = str(result["id"])
+        ET.SubElement(ad, "AdType").text = data.type_category
+        ET.SubElement(ad, "Category").text = data.category
+        ET.SubElement(ad, "Address").text = data.adress
+        ET.SubElement(ad, "ManagerName").text = data.manager_name
+        ET.SubElement(ad, "ContactPhone").text = data.contact
+        ET.SubElement(ad, "TypeId").text = data.type_id
+        ET.SubElement(ad, "Title").text = f"{result['ЗАПЧАСТЬ']} {result['МАРКА']} " \
+                                          f"{result['МОДЕЛЬ']} {result['ОБЪЕМ']}{result['ТИП ДВИГАТЕЛЯ']} " \
+                                          f"{result['МАРКИРОВКА ДВИГАТЕЛЯ']}"
+        ET.SubElement(ad, "Description").text = etr.CDATA(str(
+            f"<p><strong>Артикул товара {result['ID_EXT']}</strong><br /><br />" +
+            f"{result['ЗАПЧАСТЬ']} {result['МАРКА']} {result['МОДЕЛЬ']} {result['ОБЪЕМ']}{result['ТИП ДВИГАТЕЛЯ']}  {result['МАРКИРОВКА ДВИГАТЕЛЯ']} {result['ГОД']}г. (б/у)<br /><br />" +
+            f"Марка: {result['МАРКА']}<br />" +
+            f"Модель: {result['МОДЕЛЬ']}<br />" +
+            f"Год: {result['ГОД']}<br />" +
+            f"Двигатель: {result['ОБЪЕМ']}{result['ТИП ДВИГАТЕЛЯ']}  {result['МАРКИРОВКА ДВИГАТЕЛЯ']}<br /><br />" +
+            f"Производитель: {result['МАРКА']}<br />" +
+            f"Маркировка: {result['МАРКИРОВКА ДВИГАТЕЛЯ']}<br /><br />" +
+            f"Контpaктный {result['ЗАПЧАСТЬ']} {result['ОБЪЕМ']}{result['ТИП ДВИГАТЕЛЯ']} {result['МАРКИРОВКА ДВИГАТЕЛЯ']}, {result['ГОД']} годa, для {result['МАРКА']} {result['МОДЕЛЬ']} Снят с рабочего машинокомплекта. Небольшой пробег, без пробега по СНГ. Отличное состояние.<br />" +
+            f"Отправка транспортными компаниями<br /><br /><br />"
+        ))
+        ET.SubElement(ad, "Price").text = str((int(result["ЦЕНА"]) + 50) * data.exchange)
+        ET.SubElement(ad, "Availability").text = data.avalibale
+        ET.SubElement(ad, "Condition").text = data.condition
+        ET.SubElement(ad, "Brand").text = result["МАРКА"]
+        images = ET.SubElement(ad, "Images")
+        for i in str(result["ФОТО"]).split(','):
+            ET.SubElement(images, "Image").set("url", i)
+
+    tree = ET.tostring(ads, encoding='utf8')
+    with open(f"{settings.XML_DIR}/{data.slug}.xml", 'wb') as my_file:
+        my_file.write(tree)
+    return FileResponse(open(f"{settings.XML_DIR}/{data.slug}.xml", 'rb'))
