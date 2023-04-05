@@ -90,9 +90,12 @@ class ExportPriceAvito(models.Model):
     category = models.CharField(verbose_name="Категория авито", max_length=255, default="Запчасти и аксессуары")
     type_category = models.CharField(verbose_name="Тип запчастей", max_length=255, default="Товар приобретен на продажу")
     condition = models.CharField(verbose_name="Состояние з/ч", max_length=255, default="Б/у")
-    manager_name = models.CharField(verbose_name='Имя менеджера', max_length=255, blank=True, null=True)
-    contact = models.CharField(verbose_name='Телефон', max_length=255, blank=True, null=True)
-    adress = models.CharField(verbose_name='Адресс', max_length=255, blank=True, null=True)
+    manager_name = models.CharField(verbose_name='Имя менеджера', max_length=255, blank=True, null=True,
+                                    help_text='Пример - "Александр"')
+    contact = models.CharField(verbose_name='Телефон', max_length=255, blank=True, null=True,
+                               help_text='Пример - "+79165147176"')
+    adress = models.CharField(verbose_name='Адрес', max_length=255, blank=True, null=True,
+                              help_text='Обязательно так - "Россия, Москва, поселение Московский, МКАД, 47-й километр, 35соор6"')
     avalibale = models.CharField(verbose_name='Наличие', max_length=255, default="В наличии")
     count = models.IntegerField(verbose_name='Колличество скачиваний', blank=True, null=True, default=0)
     date_last = models.DateTimeField(verbose_name='Дата последнего скачивания', blank=True, null=True)
