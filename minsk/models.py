@@ -85,7 +85,7 @@ class ExportPriceAvito(models.Model):
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="slug")
     url = models.CharField(verbose_name='Ссылка', max_length=255, blank=True, null=True,
                            default='https://avaxdjango.herokuapp.com/minsk/export/avito/')
-    exchange = models.IntegerField(verbose_name="Курс валюты", default=1)
+    exchange = models.IntegerField(verbose_name="Курс валюты")
     type_id = models.CharField(verbose_name='подкатегория товара', max_length=255, default="16-830")
     category = models.CharField(verbose_name="Категория авито", max_length=255, default="Запчасти и аксессуары")
     type_category = models.CharField(verbose_name="Тип запчастей", max_length=255, default="Товар приобретен на продажу")
