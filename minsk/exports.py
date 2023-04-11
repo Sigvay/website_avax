@@ -46,7 +46,7 @@ def export_price(name: str):
             worksheet.write(f'I{i}', drom_year.format(result.year))
             worksheet.write(f'N{i}', drom_description.format(result.vin))
             worksheet.write(f'O{i}', 1)
-            worksheet.write(f'P{i}', (result.price + 100) * 80)
+            worksheet.write(f'P{i}', (result.price + 100) * 88)
             worksheet.write(f'Q{i}', 'В наличии')
             worksheet.write(f'S{i}', result.photo)
         workbook.close()
