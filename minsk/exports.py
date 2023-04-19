@@ -1,4 +1,5 @@
 import xlsxwriter as xlsx
+import csv
 import lxml.etree as ET
 from lxml import etree as etr
 from django.http import FileResponse
@@ -54,55 +55,81 @@ def export_price(name: str):
         return FileResponse(open(settings.EXCEL_BASE_EXPORT, 'rb'))
     elif name == "Bamper":
         results = requests.get(f'https://avax.by/api/all_zap/DueMQ88!Sm43')
-        workbook = xlsx.Workbook(settings.EXCEL_BASE_EXPORT)
-        worksheet = workbook.add_worksheet()
-        bold = workbook.add_format({'bold': True})
-        worksheet.write('A1', 'АРТИКУЛ', bold)
-        worksheet.write('B1', 'МАРКА', bold)
-        worksheet.write('C1', 'МОДЕЛЬ', bold)
-        worksheet.write('D1', 'ВЕРСИЯ', bold)
-        worksheet.write('E1', 'ГОД', bold)
-        worksheet.write('F1', 'ТОПЛИВО', bold)
-        worksheet.write('G1', 'ОБЪЕМ', bold)
-        worksheet.write('H1', 'ТИП ДВИГАТЕЛЯ', bold)
-        worksheet.write('I1', 'КОРОБКА', bold)
-        worksheet.write('J1', 'ТИП КУЗОВА', bold)
-        worksheet.write('K1', 'ЗАПЧАСТЬ', bold)
-        worksheet.write('L1', 'ОПИСАНИЕ', bold)
-        worksheet.write('M1', 'НОМЕР', bold)
-        worksheet.write('N1', 'ПОД ЗАКАЗ', bold)
-        worksheet.write('O1', 'НОВАЯ', bold)
-        worksheet.write('P1', 'R ДИАМЕТР', bold)
-        worksheet.write('Q1', 'J ШИРИНА', bold)
-        worksheet.write('R1', 'КОЛ ОТВЕРСТИЙ', bold)
-        worksheet.write('S1', 'ET ВЫЛЕТ', bold)
-        worksheet.write('T1', 'DIA', bold)
-        worksheet.write('U1', 'PCD', bold)
-        worksheet.write('V1', 'СКЛАДСКАЯ ИНФОРМАЦИЯ', bold)
-        worksheet.write('W1', 'ЦЕНА', bold)
-        worksheet.write('X1', 'ВАЛЮТА', bold)
-        worksheet.write('Y1', 'СКИДКА', bold)
-        worksheet.write('Z1', 'ФОТО', bold)
-        for i, (result) in enumerate(results.json(), start=2):
-            worksheet.write(f'A{i}', result["ID_EXT"])
-            worksheet.write(f'B{i}', result["МАРКА"])
-            worksheet.write(f'C{i}', result["МОДЕЛЬ"])
-            worksheet.write(f'E{i}', result["ГОД"])
-            worksheet.write(f'F{i}', result["ТОПЛИВО"])
-            worksheet.write(f'G{i}', result["ОБЪЕМ"])
-            worksheet.write(f'H{i}', result["ТИП ДВИГАТЕЛЯ"])
-            worksheet.write(f'I{i}', result["КОРОБКА"])
-            worksheet.write(f'J{i}', result["ТИП КУЗОВА"])
-            worksheet.write(f'K{i}', result["ЗАПЧАСТЬ"])
-            worksheet.write(f'L{i}', "Цена за ДВС в комплектации как на фото, навесное с ДВС и КПП по отдельности не продаем. Видео работы ДВС перед снятием.")
-            worksheet.write(f'M{i}', result["МАРКИРОВКА ДВИГАТЕЛЯ"])
-            worksheet.write(f'N{i}', "0")
-            worksheet.write(f'O{i}', "0")
-            worksheet.write(f'W{i}', result["ЦЕНА"]+50)
-            worksheet.write(f'X{i}', result["ВАЛЮТА"])
-            worksheet.write(f'Z{i}', result["ФОТО"])
-        workbook.close()
-        return FileResponse(open(settings.EXCEL_BASE_EXPORT, 'rb'))
+        with open(settings.CSV_BASE_EXPORT, "w", encoding="utf-8") as file:
+            writer = csv.writer(file, delimiter=";")
+            writer.writerow(
+                (
+                    "ID_EXT",
+                    "МАРКА",
+                    "МОДЕЛЬ",
+                    "ГОД",
+                    "ЗАПЧАСТЬ",
+                    "ВЕРСИЯ",
+                    "ТОПЛИВО",
+                    "ОБЪЕМ",
+                    "ТИП ДВИГАТЕЛЯ",
+                    "КОРОБКА",
+                    "ТИП КУЗОВА",
+                    "R ДИАМЕТР",
+                    "J ШИРИНА",
+                    "КОЛ ОТВЕРСТИЙ",
+                    "ET ВЫЛЕТ",
+                    "DIA",
+                    "PCD",
+                    "НОМЕР",
+                    "ОПИСАНИЕ",
+                    "НОВАЯ",
+                    "ПОД ЗАКАЗ",
+                    "СКЛАДСКАЯ ИНФОРМАЦИЯ",
+                    "ЦЕНА",
+                    "ВАЛЮТА",
+                    "СКИДКА",
+                    "АДРЕС",
+                    "ТЕЛЕФОНЫ",
+                    "EMAIL",
+                    "ИМЯ",
+                    "ФОТО",
+                )
+            )
+        for result in results.json():
+            with open(settings.CSV_BASE_EXPORT, "a", encoding="utf-8") as file:
+                writer = csv.writer(file, delimiter=";")
+                writer.writerow(
+                    (
+                        result['ID_EXT'],
+                        result['МАРКА'],
+                        result['МОДЕЛЬ'],
+                        result['ГОД'],
+                        result['ЗАПЧАСТЬ'],
+                        "",
+                        result['ТОПЛИВО'],
+                        result['ОБЪЕМ'],
+                        result['ТИП ДВИГАТЕЛЯ'],
+                        result['КОРОБКА'],
+                        result['ТИП КУЗОВА'],
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        result['МАРКИРОВКА ДВИГАТЕЛЯ'],
+                        "Цена за ДВС в комплектации как на фото, навесное с ДВС и КПП по отдельности не продаем. Видео работы ДВС перед снятием.",
+                        0,
+                        0,
+                        "",
+                        result['ЦЕНА'] + 50,
+                        result['ВАЛЮТА'],
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        result['ФОТО']
+                    )
+                )
+        return FileResponse(open(settings.CSV_BASE_EXPORT, 'rb'))
+
     else:
         results = WarehouseMinsk.objects.all()
         workbook = xlsx.Workbook(settings.EXCEL_BASE_EXPORT)
