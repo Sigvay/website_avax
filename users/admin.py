@@ -4,7 +4,7 @@ from .models import *
 
 @admin.register(Users)
 class UsersAdmin(admin.ModelAdmin):
-    list_display = ('username', 'date_joined', 'first_name', 'last_name', 'id_telegram')
+    list_display = ('username', 'date_joined', 'first_name', 'last_name', 'id_telegram', 'deny_access')
     list_display_links = ('username', )
     list_filter = ('is_staff', 'exctended_profile')
     search_fields = ('username', )

@@ -22,7 +22,7 @@ class Users(AbstractUser):
     city = models.CharField(verbose_name='Город', max_length=255, blank=True)
 
     def __str__(self):
-        return f'{self.username} - {self.first_name} {self.last_name}'
+        return f'{self.first_name} {self.last_name}'
 
 
 class UserRequest(models.Model):
