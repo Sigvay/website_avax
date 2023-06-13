@@ -88,7 +88,7 @@ def update_minsksklad():
                                                 year=art[4], spare=art[5], fuel=art[6], volume=art[7],
                                                 type_engine=art[8],
                                                 transmission=art[9],
-                                                original_number=art[10], description=art[11], price=art[12] + 50,
+                                                original_number=art[10], description=art[11], price=art[12] + 100,
                                                 currency=art[13],
                                                 id_photo=generate(6),
                                                 photo=art[14], input_article=int(art[15]), vin=art[16],
@@ -113,7 +113,7 @@ def update_minsksklad():
                         pos.update(
                             mark_auto=art[1], model_auto=art[2], submodel_auto=art[3],
                             year=art[4], spare=art[5], fuel=art[6], volume=art[7], type_engine=art[8],
-                            transmission=art[9], original_number=art[10], description=art[11], price=art[12] + 50,
+                            transmission=art[9], original_number=art[10], description=art[11], price=art[12] + 100,
                             currency=art[13], photo=art[14], input_article=int(art[15]), vin=art[16], video=art[17]
                         )
 

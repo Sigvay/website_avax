@@ -129,7 +129,6 @@ def export_price(name: str):
                     )
                 )
         return FileResponse(open(settings.CSV_BASE_EXPORT, 'rb'))
-
     else:
         results = WarehouseMinsk.objects.all()
         workbook = xlsx.Workbook(settings.EXCEL_BASE_EXPORT)
