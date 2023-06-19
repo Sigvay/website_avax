@@ -208,6 +208,7 @@ def export_avito(data):
         ET.SubElement(ad, "Availability").text = data.avalibale
         ET.SubElement(ad, "Condition").text = data.condition
         ET.SubElement(ad, "Brand").text = result["МАРКА"]
+        ET.SubElement(ad, "OEM").text = result["МАРКИРОВКА ДВИГАТЕЛЯ"]
         images = ET.SubElement(ad, "Images")
         for i in str(result["ФОТО"]).split(','):
             ET.SubElement(images, "Image").set("url", i)
