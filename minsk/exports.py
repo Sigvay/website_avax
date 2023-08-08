@@ -207,7 +207,7 @@ def export_avito(data):
             "У нас есть видео работы данного двигателя в Англии перед разбором автомобиля, чтобы вы могли оценить его работу и состояние. Двигатель был привезен из Англии и находится в хорошем состоянии. " +
             f"Не упустите возможность приобрести отличный двигатель для своего {result['МАРКА']} {result['МОДЕЛЬ']}! Свяжитесь с нами прямо сейчас и мы с радостью ответим на все ваши вопросы и организуем доставку."
         ))
-        ET.SubElement(ad, "Price").text = str((int(result["ЦЕНА"]) + 250) * data.exchange)
+        ET.SubElement(ad, "Price").text = str((int(result["ЦЕНА"]) + 150) * data.exchange)
         ET.SubElement(ad, "Availability").text = data.avalibale
         ET.SubElement(ad, "Condition").text = data.condition
         ET.SubElement(ad, "Brand").text = result["МАРКА"]
