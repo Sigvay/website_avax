@@ -118,7 +118,7 @@ def export_price(name: str):
                         0,
                         0,
                         "",
-                        result['ЦЕНА'] + 100,
+                        result['ЦЕНА'] + 50,
                         result['ВАЛЮТА'],
                         "",
                         "",
